@@ -47,29 +47,118 @@ public class Employee {
         this.insertTime = insertTime;
     }
 
-    public static void getListEmployee() {
+    @Override
+    public String toString() {
+        String strEmployee = "Employee: " + id + " " + name + " " + role + " " + insertTime;
+        //el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime();
+        return strEmployee;
+    }
+
+    public static List<Employee> getListEmployeeByName(String nameEmpl) {
 
         Session session = null;
         List<Employee> listEmployees = new ArrayList<Employee>();
+
         try {
-            // вывод всего списка записанных в базу Employee
+            // вывод Employee по имени
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            //Query query = session.createQuery("from Employee");
             Query query = session.createQuery("from Employee where name = :nameEmployee ");
-            query.setParameter("nameEmployee", "David");
+            query.setParameter("nameEmployee", nameEmpl);
             listEmployees = (List<Employee>) query.list();
-            for (Employee el : listEmployees)
-                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
-
-            //System.out.println(el.toString());
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
-
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
+        return listEmployees;
     }
 
+    public static List<Employee> getListAllEmployee() {
+        Session session = null;
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        try {
+            // вывод всего списка записанных в базу Employee
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee");
+            listEmployees = (List<Employee>) query.list();
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
+            session.getTransaction().commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return listEmployees;
+    }
+
+    public static List<Employee> getListEmployeeByDate(String dateSelect) {
+        Session session = null;
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        try {
+            // вывод Employee по точной дате добавления
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee where insertTime = '" + dateSelect + "'");
+            //query.setParameter("insertTime", dateSelect);
+            listEmployees = (List<Employee>) query.list();
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
+            session.getTransaction().commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return listEmployees;
+    }
+
+    public static List<Employee> getListEmployeeAfterDate(String dateAfter) {
+        Session session = null;
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        try {
+            // вывод Employee добавленные после даты
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee where insertTime > '" + dateAfter + "'");
+            listEmployees = (List<Employee>) query.list();
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
+            session.getTransaction().commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return listEmployees;
+    }
+
+    public static List<Employee> getListEmployeeBetweenDate(String sincePeriod, String tillPeriod) {
+        Session session = null;
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        try {
+            // вывод Employee добавленные между датами
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Employee where insertTime > '" + sincePeriod + "' and insertTime < '" + tillPeriod + "'");
+            listEmployees = (List<Employee>) query.list();
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
+            session.getTransaction().commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return listEmployees;
+    }
 }
