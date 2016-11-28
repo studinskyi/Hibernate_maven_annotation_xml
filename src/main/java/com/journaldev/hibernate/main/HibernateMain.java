@@ -1,12 +1,15 @@
 package com.journaldev.hibernate.main;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import com.journaldev.hibernate.model.Employee;
 import com.journaldev.hibernate.util.HibernateUtil;
+import org.hibernate.Transaction;
 
 public class HibernateMain {
 
@@ -26,8 +29,20 @@ public class HibernateMain {
         session.getTransaction().commit();
         System.out.println("Employee ID=" + emp.getId());
 
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        //        System.out.println("вывод всего списка Employee через Criteria");
+        //        //listEmployees = Employee.getListAllEmployee_Criteria(session);
+        //        session.beginTransaction();
+        //        Criteria cr = session.createCriteria(Employee.class);
+        //        listEmployees = cr.list();
+        //        for (Employee el : listEmployees)
+        //            System.out.println(el.toString());
+        //        session.getTransaction().commit();
+
+
         System.out.println("вывод всего списка записанных в базу Employee");
-        List<Employee> listEmployees = Employee.getListAllEmployee();
+        listEmployees = Employee.getListAllEmployee();
         for (Employee el : listEmployees)
             System.out.println(el.toString());
 

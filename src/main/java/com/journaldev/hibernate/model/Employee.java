@@ -1,8 +1,7 @@
 package com.journaldev.hibernate.model;
 
 import com.journaldev.hibernate.util.HibernateUtil;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -160,5 +159,18 @@ public class Employee {
             }
         }
         return listEmployees;
+    }
+
+    public static List<Employee> getListAllEmployee_Criteria(Session session) {
+        List<Employee> listEmployees = new ArrayList<Employee>();
+
+        Transaction tx = session.beginTransaction();
+        Criteria cr = session.createCriteria(Employee.class);
+        listEmployees = cr.list();
+        tx.commit();
+
+
+        return listEmployees;
+
     }
 }
