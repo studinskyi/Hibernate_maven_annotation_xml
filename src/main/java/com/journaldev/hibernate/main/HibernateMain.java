@@ -31,16 +31,6 @@ public class HibernateMain {
 
         List<Employee> listEmployees = new ArrayList<Employee>();
 
-        //        System.out.println("вывод всего списка Employee через Criteria");
-        //        //listEmployees = Employee.getListAllEmployee_Criteria(session);
-        //        session.beginTransaction();
-        //        Criteria cr = session.createCriteria(Employee.class);
-        //        listEmployees = cr.list();
-        //        for (Employee el : listEmployees)
-        //            System.out.println(el.toString());
-        //        session.getTransaction().commit();
-
-
         System.out.println("вывод всего списка записанных в базу Employee");
         listEmployees = Employee.getListAllEmployee();
         for (Employee el : listEmployees)

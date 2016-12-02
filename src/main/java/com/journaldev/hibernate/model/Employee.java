@@ -13,6 +13,15 @@ public class Employee {
     private String name;
     private String role;
     private Date insertTime;
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 
     public int getId() {
         return id;
@@ -48,8 +57,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        String strEmployee = "Employee: " + id + " " + name + " " + role + " " + insertTime;
-        //el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime();
+        String strEmployee = "Employee: " + id + " " + name + " " + role + " " + insertTime + " " + department.toString();
         return strEmployee;
     }
 
@@ -65,8 +73,6 @@ public class Employee {
             Query query = session.createQuery("from Employee where name = :nameEmployee ");
             query.setParameter("nameEmployee", nameEmpl);
             listEmployees = (List<Employee>) query.list();
-            //            for (Employee el : listEmployees)
-            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
         } finally {
             if (session != null && session.isOpen()) {
@@ -86,8 +92,6 @@ public class Employee {
             session.beginTransaction();
             Query query = session.createQuery("from Employee");
             listEmployees = (List<Employee>) query.list();
-            //            for (Employee el : listEmployees)
-            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
         } finally {
             if (session != null && session.isOpen()) {
@@ -108,8 +112,6 @@ public class Employee {
             Query query = session.createQuery("from Employee where insertTime = '" + dateSelect + "'");
             //query.setParameter("insertTime", dateSelect);
             listEmployees = (List<Employee>) query.list();
-            //            for (Employee el : listEmployees)
-            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
         } finally {
             if (session != null && session.isOpen()) {
@@ -129,8 +131,6 @@ public class Employee {
             session.beginTransaction();
             Query query = session.createQuery("from Employee where insertTime > '" + dateAfter + "'");
             listEmployees = (List<Employee>) query.list();
-            //            for (Employee el : listEmployees)
-            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
         } finally {
             if (session != null && session.isOpen()) {
@@ -150,8 +150,6 @@ public class Employee {
             session.beginTransaction();
             Query query = session.createQuery("from Employee where insertTime > '" + sincePeriod + "' and insertTime < '" + tillPeriod + "'");
             listEmployees = (List<Employee>) query.list();
-            //            for (Employee el : listEmployees)
-            //                System.out.println(el.getId() + " " + el.getName() + " " + el.getRole() + " " + el.getInsertTime());
             session.getTransaction().commit();
         } finally {
             if (session != null && session.isOpen()) {
