@@ -13,6 +13,7 @@ public class Hibernate_one_to_many {
 
     public static void main(String[] args) {
         List<Employee> listEmployees = new ArrayList<Employee>();
+        List<Nickname> listNicknames = new ArrayList<Nickname>();
 
         //Get Session
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -20,7 +21,7 @@ public class Hibernate_one_to_many {
         session.beginTransaction();
 
         try {
-            for (int i = 0; i < 350; i++) {
+            for (int i = 0; i < 150; i++) {
                 Employee empl_1 = new Employee();
                 empl_1.setName("Alexandr");
                 empl_1.setRole("WebDev" + (new Random()).nextInt());
@@ -31,13 +32,13 @@ public class Hibernate_one_to_many {
                 depart_1.setEmployee(empl_1);
 
                 Nickname nik1_1 = new Nickname();
-                nik1_1.setName("Alex1_1_" + (new Random()).nextInt());
+                nik1_1.setName("Alex1_" + (new Random()).nextInt());
                 nik1_1.setEmployee(empl_1);
                 Nickname nik1_2 = new Nickname();
-                nik1_2.setName("Alex1_2_" + (new Random()).nextInt());
+                nik1_2.setName("Alex2_" + (new Random()).nextInt());
                 nik1_2.setEmployee(empl_1);
                 Nickname nik1_3 = new Nickname();
-                nik1_3.setName("Alex1_3" + (new Random()).nextInt());
+                nik1_3.setName("Alex3_" + (new Random()).nextInt());
                 nik1_3.setEmployee(empl_1);
                 Set<Nickname> nicknameSet = new HashSet<Nickname>();
                 nicknameSet.add(nik1_1);
@@ -59,7 +60,7 @@ public class Hibernate_one_to_many {
                 System.out.println("new Nik3 ID = " + nik1_3.getId());
 
                 Employee empl_2 = new Employee();
-                empl_2.setName("Nikolay");
+                empl_2.setName("Vitalyi");
                 empl_2.setRole("QAManual");
                 empl_2.setInsertTime(new Date());
 
@@ -68,13 +69,13 @@ public class Hibernate_one_to_many {
                 depart_2.setEmployee(empl_2);
 
                 Nickname nik2_1 = new Nickname();
-                nik2_1.setName("Nik1_1_" + (new Random()).nextInt());
+                nik2_1.setName("Vit1_" + (new Random()).nextInt());
                 nik2_1.setEmployee(empl_1);
                 Nickname nik2_2 = new Nickname();
-                nik2_2.setName("Nik1_2_" + (new Random()).nextInt());
+                nik2_2.setName("Vit2_" + (new Random()).nextInt());
                 nik2_2.setEmployee(empl_1);
                 Nickname nik2_3 = new Nickname();
-                nik2_3.setName("Nik1_3" + (new Random()).nextInt());
+                nik2_3.setName("Vit3_" + (new Random()).nextInt());
                 nik2_3.setEmployee(empl_1);
                 nicknameSet = new HashSet<Nickname>();
                 nicknameSet.add(nik2_1);
@@ -106,6 +107,11 @@ public class Hibernate_one_to_many {
             listEmployees = Employee.getListAllEmployee();
             for (Employee elEmpl : listEmployees)
                 System.out.println(elEmpl.toString());
+
+            System.out.println("вывод всего списка записанных в базу Nikname");
+            listNicknames = Nickname.getListAllNicknames();
+            for (Nickname elNik : listNicknames)
+                System.out.println(elNik.toString());
 
             //            // show all nicknames of Employees
             //           Employee.showAllNicknamesEmployee();
