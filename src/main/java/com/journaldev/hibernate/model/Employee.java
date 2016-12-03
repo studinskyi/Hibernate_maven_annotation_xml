@@ -6,6 +6,7 @@ import org.hibernate.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class Employee {
 
@@ -14,6 +15,15 @@ public class Employee {
     private String role;
     private Date insertTime;
     private Department department;
+    private Set<Nickname> nicknames;
+
+    public Set<Nickname> getNicknames() {
+        return nicknames;
+    }
+
+    public void setNicknames(Set<Nickname> nicknames) {
+        this.nicknames = nicknames;
+    }
 
     public Department getDepartment() {
         return department;
@@ -99,6 +109,28 @@ public class Employee {
             }
         }
         return listEmployees;
+    }
+
+    public static void showAllNicknamesEmployee() {
+        Session session = null;
+        List<Object> listNikEmpl = new ArrayList<Object>();
+
+        try {
+            // вывод всего списка записанных в базу Employee
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            Query query = session.createQuery("SELECT OBJECT(rrr) FROM Nickname AS N JOIN N.employee rrr");
+            listNikEmpl = (List<Object>) query.list();
+            for (Object strNikEmpl : listNikEmpl)
+                System.out.println(strNikEmpl.toString());
+
+            session.getTransaction().commit();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        //return listEmployees;
     }
 
     public static List<Employee> getListEmployeeByDate(String dateSelect) {

@@ -21,5 +21,12 @@
         <one-to-one name="department" class="com.journaldev.hibernate.model.Department"
                     cascade="save-update"></one-to-one>
 
+        <set name="nicknames" table="NICKNAME" fetch="select">
+            <key>
+                <column name="employee_id" not-null="true"></column>
+            </key>
+            <one-to-many class="com.journaldev.hibernate.model.Nickname"/>
+        </set>
+
     </class>
 </hibernate-mapping>

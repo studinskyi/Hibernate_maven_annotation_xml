@@ -26,7 +26,7 @@ public class Department {
 
     @Override
     public String toString() {
-        String strDepartment = " Department " + id + " " + name;
+        String strDepartment = " Department id = " + id + " , name = " + name;
         return strDepartment;
     }
 
