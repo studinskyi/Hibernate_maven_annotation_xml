@@ -1,5 +1,9 @@
 package com.journaldev.hibernate.main;
 
+import com.journaldev.hibernate.dao.EmployeeDao;
+import com.journaldev.hibernate.dao.NicknameDao;
+import com.journaldev.hibernate.dao.impl.EmployeeDaoimpl;
+import com.journaldev.hibernate.dao.impl.NicknameDaoimpl;
 import com.journaldev.hibernate.model.Department;
 import com.journaldev.hibernate.model.Employee;
 import com.journaldev.hibernate.model.Nickname;
@@ -12,6 +16,8 @@ import java.util.*;
 public class Hibernate_one_to_many {
 
     public static void main(String[] args) {
+        EmployeeDao employeeDao = new EmployeeDaoimpl();
+        NicknameDao nicknameDao = new NicknameDaoimpl();
         List<Employee> listEmployees = new ArrayList<Employee>();
         List<Nickname> listNicknames = new ArrayList<Nickname>();
 
@@ -104,18 +110,14 @@ public class Hibernate_one_to_many {
             e.printStackTrace();
         } finally {
             System.out.println("вывод всего списка записанных в базу Employee");
-            listEmployees = Employee.getListAllEmployee();
+            listEmployees = employeeDao.getListAllEmployee();
             for (Employee elEmpl : listEmployees)
                 System.out.println(elEmpl.toString());
 
             System.out.println("вывод всего списка записанных в базу Nikname");
-            listNicknames = Nickname.getListAllNicknames();
+            listNicknames = nicknameDao.getListAllNicknames();
             for (Nickname elNik : listNicknames)
                 System.out.println(elNik.toString());
-
-            //            // show all nicknames of Employees
-            //           Employee.showAllNicknamesEmployee();
-
 
             //terminate session factory, otherwise program won't end
             HibernateUtil.getSessionFactory().close();

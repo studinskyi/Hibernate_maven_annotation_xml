@@ -1,6 +1,8 @@
 package com.journaldev.hibernate.main;
 
 
+import com.journaldev.hibernate.dao.EmployeeDao;
+import com.journaldev.hibernate.dao.impl.EmployeeDaoimpl;
 import com.journaldev.hibernate.model.Department;
 import com.journaldev.hibernate.model.Employee;
 import com.journaldev.hibernate.util.HibernateUtil;
@@ -14,6 +16,7 @@ import java.util.Random;
 public class Hibernate_one_to_one {
 
     public static void main(String[] args) {
+        EmployeeDao employeeDao = new EmployeeDaoimpl();
         List<Employee> listEmployees = new ArrayList<Employee>();
 
         //Get Session
@@ -22,7 +25,7 @@ public class Hibernate_one_to_one {
         session.beginTransaction();
 
         try {
-            for (int i = 0; i < 250; i++) {
+            for (int i = 0; i < 100; i++) {
                 Employee empl_1 = new Employee();
                 empl_1.setName("Denis");
                 empl_1.setRole("QAAut" + (new Random()).nextInt());
@@ -61,9 +64,13 @@ public class Hibernate_one_to_one {
             e.printStackTrace();
         } finally {
             System.out.println("вывод всего списка записанных в базу Employee");
-            listEmployees = Employee.getListAllEmployee();
+            listEmployees = employeeDao.getListAllEmployee();
             for (Employee el : listEmployees)
                 System.out.println(el.toString());
+
+            //            listEmployees = employeeDao.getListEmployeeByName("Denis");
+            //            for (Employee el : listEmployees)
+            //                System.out.println(el.toString());
 
             //terminate session factory, otherwise program won't end
             HibernateUtil.getSessionFactory().close();
